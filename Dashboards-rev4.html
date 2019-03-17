@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div>
+            <canvas id="Dashboard" width="220" height="230"></canvas>
+        </div>
+    </body>
+<script>
+    
+    function dashboards(percent, ID, percent_Y_I, percent_Y_F, xArc, yArc, rArc, xText, yText, sizeLine, sizeLineMeta) {
+        // start o dashboard
+        var porcent = percent;// it is variable %
+        var canvasID = ID;
+        var porcent_Y_I = percent_Y_I;
+        var porcent_Y_F = percent_Y_F;
+        var ctx = null;
+
+        var canvas = document.getElementById(canvasID);
+        ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canvas
+        var graus = (porcent * 360) / 100; // convert porcent in degree
+        var radians = (Math.PI / 180) * graus;// convert degree to radius
+
+        // start fundo 
+        var canvas_fundo = document.getElementById(canvasID);
+        var ctx_fundo = canvas_fundo.getContext('2d');
+        var graus_fundo = 360 // convert porcent in degree
+        var radians_fundo = (Math.PI / 180) * graus_fundo;// convert degree to radius
+
+        ctx_fundo.strokeStyle = '#D3D3D3';// color border grey
+        ctx_fundo.beginPath();// start draw
+        ctx_fundo.lineWidth = sizeLine;// size border
+        ctx_fundo.arc(xArc, yArc, rArc, 0, radians_fundo, false);// start arc
+        ctx_fundo.stroke();// border
+        //end 
+
+        if (porcent <= porcent_Y_I) {
+            ctx.strokeStyle = '#FF0000';// color border red
+            
+        } else if ((porcent > porcent_Y_I) && (porcent < porcent_Y_F)) {
+            ctx.strokeStyle = '#FFD700';// color border yellow
+        } else {
+            ctx.strokeStyle = '#32CD32';// color border green
+        }
+
+        ctx.beginPath();// start
+        ctx.lineWidth = sizeLine;// size border
+        ctx.arc(xArc, yArc, rArc, 0, radians, false);// srtart arc
+        ctx.stroke();// border
+
+        ctx.font = '28px arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(porcent.toFixed(0) + '%', xText, yText); 
+
+        // and dashboard
+    }
+
+    dashboards(90, 'Dashboard', 70, 86, 110, 110, 95, 112, 120, 20, 30);
+</script>
+</html>
